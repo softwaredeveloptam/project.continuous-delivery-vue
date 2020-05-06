@@ -3,15 +3,14 @@
     <!-- <div>
       <h2>Search and add a pin</h2>
       <gmap-autocomplete v-on:place_changed="setPlace"></gmap-autocomplete>
-      <button v-on:click="addMarker">Add</button>
     </div>-->
+    <button v-on:click="addMarker">Add</button>
 
     <GmapMap
       :zoom="4"
       :center="{ lat: 25.7392, lng: -104.9903 }"
       map-type-id="terrain"
       style="width: 100%; height: 300px"
-      v-on:click="addMarker"
     >
       <GmapMarker
         v-for="location in locations"
@@ -48,18 +47,21 @@ export default {
       console.log(this.currentPlace);
     },
     addMarker() {
-      if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.lat,
-          lng: this.currentPlace.lng,
-        };
-        console.log(marker);
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-        console.log(this.markers, this.places);
-        this.center = marker;
-        this.currentPlace = null;
-      }
+      const marker = { lat: 25.7392, lng: -104.9903 };
+      this.markers.push({ position: marker });
+      console.log(this.markers);
+      // if (this.currentPlace) {
+      //   const marker = {
+      //     lat: this.currentPlace.lat,
+      //     lng: this.currentPlace.lng,
+      //   };
+      //   console.log(marker);
+      //   this.markers.push({ position: marker });
+      //   this.places.push(this.currentPlace);
+      //   console.log(this.markers, this.places);
+      //   this.center = marker;
+      //   this.currentPlace = null;
+      // }
     },
     // geolocate: function() {
     //   navigator.geolocation.getCurrentPosition((position) => {
