@@ -15,6 +15,7 @@
       />
     </GmapMap>
   </div>
+
 </template>
 
 <script>
