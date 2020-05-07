@@ -6,7 +6,17 @@ exports.up = function(knex, Promise) {
 
     table.float("longitude");
 
-    table.text("name").notNullable();
+    table.text("site_name").notNullable();
+
+    table.text("name");
+
+    table.text("state");
+
+    table.text("city");
+
+    table.text("highway");
+
+    table.text("type");
   });
 };
 
