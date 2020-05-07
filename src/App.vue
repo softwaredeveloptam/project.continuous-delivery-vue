@@ -1,22 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
     <div>
+      <Header msg="Welcome to FlyingK's High Flying Website" />
       <Map />
+      <FilterRegion />
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Header from "./components/Header";
+import FilterRegion from "./components/FilterRegion";
 import Map from "./components/Map";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
+    Header,
     Map,
+    FilterRegion,
   },
 };
 </script>
