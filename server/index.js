@@ -1,15 +1,13 @@
 const app = require("./app");
 const db = require("./knex");
-// const knex = require("knex");
-
+const seedDB = require("../data/import");
 const PORT = process.env.PORT || 9000;
 
 (async () => {
   try {
     console.log("Running migrations");
     await db.migrate.latest();
-    // const locations = await knex("locations");
-    // console.log(locations);
+    await seedDB();
 
     console.log("Starting express");
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));

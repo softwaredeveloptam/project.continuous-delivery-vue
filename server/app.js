@@ -17,9 +17,7 @@ app.use(express.static(path.resolve(__dirname, "..", "dist")));
 
 app.get("/api/locations", async (req, res) => {
   try {
-    console.log("locations");
     const locations = await db.select().table("locations");
-    console.log(locations);
     res.json(locations);
   } catch (err) {
     console.error("Error loading locations!", err);
