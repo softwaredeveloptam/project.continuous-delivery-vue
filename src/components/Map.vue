@@ -2,9 +2,9 @@
   <div>
     <GmapMap
       :zoom="4"
-      :center="{ lat: 25.7392, lng: -104.9903 }"
+      :center="{ lat: 39.5, lng: -98 }"
       map-type-id="terrain"
-      style="width: 100%; height: 300px"
+      style="width: 100%; height: 500px"
     >
       <GmapMarker
         v-for="marker in markers"
@@ -25,14 +25,11 @@
 import { gmapApi } from "vue2-google-maps";
 import axios from "axios";
 
-//[{lat:, lun:, name:}]
-//parse.json
-
 export default {
   name: "Map",
   mounted() {
-    this.getLocations();
-    this.getFromDb();
+    //this.getLocations();
+    this.addMarker(); //get place from database and add marker
   },
   computed: {
     locations() {
@@ -41,29 +38,36 @@ export default {
     google: gmapApi,
   },
   methods: {
-    getLocations() {
-      this.$store.dispatch("loadMarkers");
-    },
+    // getLocations() {
+    //   this.$store.dispatch("loadMarkers");
+    // },
     markerRightClicked() {},
     markerColer(type) {
-      if (type === "restaurant") {
+      if (type === "Travel Stop") {
         return "blue";
       }
-      if (type === "grocery") {
+      if (type === "Country Store") {
         return "yellow";
+      } else {
+        return "red";
       }
     },
-    async getFromDb() {
+    async addMarker() {
       const shopLocation = await axios.get("/api/locations");
-      console.log("Shop Location!!", shopLocation);
+      let markers = shopLocation.data;
+      console.log(shopLocation);
+      markers = markers.map((shop) => {
+        return {
+          position: { lat: shop.latitude, lng: shop.longitude },
+          type: shop.type,
+        };
+      });
+      this.markers = markers;
     },
   },
   data() {
     return {
-      markers: [
-        { position: { lat: 25.7392, lng: -104.9903 }, type: "restaurant" },
-        { position: { lat: 26.7392, lng: -105.9903 }, type: "grocery" },
-      ],
+      markers: [],
       places: [],
       currentPlace: null,
       locationsA: [],
