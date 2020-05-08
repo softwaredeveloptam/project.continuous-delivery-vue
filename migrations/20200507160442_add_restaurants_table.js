@@ -2,12 +2,13 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("restaurants", (table) => {
     table.increments().index();
 
+    table.integer("location_id").index();
     table
-      .integer("restaurant_id")
-      .index()
-      .unique();
+      .foreign("location_id")
+      .references("id")
+      .inTable("locations");
 
-    table.text("name").unique();
+    table.text("name");
   });
 };
 
