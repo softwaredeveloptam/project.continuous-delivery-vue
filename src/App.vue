@@ -2,8 +2,13 @@
   <div id="app">
     <div>
       <Header msg="Welcome to FlyingK's High Flying Website" />
-      <Map v-bind:selectedValue="selectedValue" />
-      <FilterRegion v-on:submitSelectedValue="onSubmitSelectedValue" />
+      <Map v-bind:markers="markers" />
+      <!-- <FilterRegion
+        v-on:submitSelectedValue="onSubmitSelectedValue"
+        v-on:updateDropdowns="onupdateDropdowns"
+      /> -->
+      <FilterRegion v-on:filter="updateMarkers" />
+      <!-- <ResultsRegion v-bind:markers="this.markers" /> -->
     </div>
   </div>
 </template>
@@ -12,6 +17,7 @@
 import Header from "./components/Header";
 import FilterRegion from "./components/FilterRegion";
 import Map from "./components/Map";
+// import ResultsRegion from "./components/ResultsRegion";
 
 export default {
   name: "app",
@@ -21,20 +27,13 @@ export default {
     FilterRegion,
   },
   methods: {
-    onSubmitSelectedValue(value) {
-      this.selectedValue = JSON.parse(JSON.stringify(value));
+    updateMarkers(markers) {
+      this.markers = markers;
     },
   },
   data() {
     return {
-      selectedValue: {
-        selectedTypes: [],
-        selectedHighway: "ALL",
-        selectedCity: "ALL",
-        selectedState: "ALL",
-        // selectedAmenities: [],
-        // selectedRestaurants: [],
-      },
+      markers: [],
     };
   },
 };
