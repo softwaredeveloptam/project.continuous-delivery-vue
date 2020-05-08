@@ -1,9 +1,8 @@
-const fs = require("fs");
 const db = require("../server/knex.js");
 const knex = require("knex");
+const fs = require("fs");
 
 const locations = JSON.parse(fs.readFileSync("./data/locations.json"));
-
 
 const seedLocationsDB = async () => {
   try {
@@ -29,7 +28,6 @@ const seedLocationsDB = async () => {
         (contactMethod) => contactMethod.Type.Name === "Fax"
       ).Data;
 
-
       await knex(db)("locations").insert({
         id,
         latitude,
@@ -45,63 +43,55 @@ const seedLocationsDB = async () => {
         telephone,
         fax,
       });
-
     }
   } catch (err) {
     console.error("Error inserting locations records", err);
   }
 };
 
-// // const seedAmenitiesDB = () => {
-// const seedAmenitiesDB = async () => {
-//   try {
-//     for (const location of locations) {
-//       const location_id = location.Site.SiteId;
-//       for (const object of location.CustomFields) {
-//         const name = object.CustomField.Label;
-//         const type = object.CustomField.Section;
-//         // insert data into amenities table
-//         if (type === "Select Amenities") {
-//           // knex(db)("amenities").insert({
-//           await knex(db)("amenities").insert({
-//             location_id,
-//             name,
-//           });
-//         } else {
-//           // insert data into truck_services table
-//           // knex(db)("truck_services").insert({
-//           await knex(db)("truck_services").insert({
-//             location_id,
-//             name,
-//           });
-//         }
-//       }
-//     }
-//   } catch (err) {
-//     console.error("Error inserting ammenities records", err);
-//   }
-// };
+const seedAmenitiesDB = async () => {
+  const amenities = [];
+  const truck_services = [];
+  try {
+    for (const location of locations) {
+      const location_id = location.Site.SiteId;
+      for (const customField of location.CustomFields) {
+        const name = customField.CustomField.Label;
+        const type = customField.CustomField.Section;
+        // insert data into amenities table
+        if (type === "Select Amenities") {
+          amenities.push({ location_id: location_id, name: name });
+        } else {
+          truck_services.push({
+            location_id: location_id,
+            name: name,
+          });
+        }
+      }
+    }
+    await knex(db)("amenities").insert(amenities);
+    await knex(db)("truck_services").insert(truck_services);
+  } catch (err) {
+    console.error("Error inserting ammenities records", err);
+  }
+};
 
-// // const seedRestaurantsDB = () => {
-// const seedRestaurantsDB = async () => {
-//   try {
-//     for (const location of locations) {
-//       const location_id = location.Site.SiteId;
-//       if (location.Site.Concepts) {
-//         for (const concept of location.Site.Concepts) {
-//           const name = concept.Concept.Name;
-//           // knex(db)("restaurants").insert({
-//           await knex(db)("restaurants").insert({
-//             location_id,
-//             name,
-//           });
-//         }
-//       }
-//     }
-//   } catch (err) {
-//     console.error("Error inserting restaurants records", err);
-//   }
-// };
+const seedRestaurantsDB = async () => {
+  const restaurants = [];
+  try {
+    for (const location of locations) {
+      const location_id = location.Site.SiteId;
+      if (location.Site.Concepts) {
+        for (const concept of location.Site.Concepts) {
+          const name = concept.Concept.Name;
+          restaurants.push({ location_id: location_id, name: name });
+        }
+      }
+    }
+    await knex(db)("restaurants").insert(restaurants);
+  } catch (err) {
+    console.error("Error inserting restaurants records", err);
+  }
+};
 
-module.exports = { seedLocationsDB };
-
+module.exports = { seedLocationsDB, seedAmenitiesDB, seedRestaurantsDB };
