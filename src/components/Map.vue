@@ -28,20 +28,30 @@ import axios from "axios";
 export default {
   name: "Map",
   mounted() {
-    //this.getLocations();
-    this.addMarker(); //get place from database and add marker
+    this.getPlaces().then(() => {
+      this.markers = this.places;
+    }); //get place from database and add marker
   },
+
   computed: {
     locations() {
       return this.$store.state.locations;
     },
     google: gmapApi,
   },
+
+  watch: {
+    selectedValue: {
+      handler() {
+        this.updateMarker();
+      },
+      deep: true,
+    },
+  },
+
   methods: {
-    // getLocations() {
-    //   this.$store.dispatch("loadMarkers");
-    // },
     markerRightClicked() {},
+
     markerColer(type) {
       if (type === "Travel Stop") {
         return "blue";
@@ -52,25 +62,60 @@ export default {
         return "red";
       }
     },
-    async addMarker() {
+
+    async getPlaces() {
       const shopLocation = await axios.get("/api/locations");
-      let markers = shopLocation.data;
-      console.log(shopLocation);
-      markers = markers.map((shop) => {
+      let places = shopLocation.data;
+      places = places.map((shop) => {
         return {
           position: { lat: shop.latitude, lng: shop.longitude },
           type: shop.type,
+          state: shop.state,
+          city: shop.city,
+          highway: shop.highway,
+          name: shop.name,
+          site_name: shop.site_name,
+          //Need to add Amenities and Restaurants
         };
       });
-      this.markers = markers;
+      this.places = places;
+    },
+
+    updateMarker() {
+      this.markers = this.places;
+
+      if (this.selectedValue.selectedState !== "ALL") {
+        this.markers = this.places.filter(
+          (place) => place.state === this.selectedValue.selectedState
+        );
+      }
+
+      if (this.selectedValue.selectedCity !== "ALL") {
+        this.markers = this.markers.filter(
+          (place) => place.city === this.selectedValue.selectedCity
+        );
+      }
+
+      if (this.selectedValue.selectedHighway !== "ALL") {
+        this.markers = this.markers.filter(
+          (place) => place.highway === this.selectedValue.selectedHighway
+        );
+      }
+
+      if (this.selectedValue.selectedTypes.length) {
+        this.markers = this.markers.filter((place) =>
+          this.selectedValue.selectedTypes.includes(place.type)
+        );
+      }
+      //Need to add Amenities and Restaurants
     },
   },
+  props: ["selectedValue", "submitted"],
   data() {
     return {
       markers: [],
       places: [],
       currentPlace: null,
-      locationsA: [],
     };
   },
 };
