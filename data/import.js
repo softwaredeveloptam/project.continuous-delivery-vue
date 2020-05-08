@@ -4,7 +4,6 @@ const knex = require("knex");
 
 const locations = JSON.parse(fs.readFileSync("./data/locations.json"));
 
-console.log("locations.length", locations.lengthq);
 
 const seedLocationsDB = async () => {
   try {
@@ -30,7 +29,8 @@ const seedLocationsDB = async () => {
         (contactMethod) => contactMethod.Type.Name === "Fax"
       ).Data;
 
-      const result = await knex(db)("locations").insert({
+
+      await knex(db)("locations").insert({
         id,
         latitude,
         longitude,
@@ -45,7 +45,7 @@ const seedLocationsDB = async () => {
         telephone,
         fax,
       });
-      console.log("result", result);
+
     }
   } catch (err) {
     console.error("Error inserting locations records", err);
@@ -104,3 +104,4 @@ const seedLocationsDB = async () => {
 // };
 
 module.exports = { seedLocationsDB };
+

@@ -6,6 +6,7 @@ const {
   // seedRestaurantsDB,
 } = require("../data/import");
 
+
 const PORT = process.env.PORT || 9000;
 const knex = require("knex");
 
@@ -16,6 +17,7 @@ const knex = require("knex");
     await seedLocationsDB();
     // await seedAmenitiesDB();
     // await seedRestaurantsDB();
+
 
     console.log("Starting express");
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
