@@ -1,4 +1,5 @@
 module.exports = {
+  verbose: true,
   moduleFileExtensions: ["js", "jsx", "json", "vue"],
 
   transform: {
@@ -9,7 +10,7 @@ module.exports = {
   },
 
   transformIgnorePatterns: [
-    "<rootDir>/node_modules/", // Had to modify this from '/node_modules/'
+    //"<rootDir>/node_modules/", // Had to modify this from '/node_modules/'
   ],
 
   moduleNameMapper: {

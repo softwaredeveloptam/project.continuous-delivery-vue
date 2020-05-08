@@ -11,7 +11,6 @@ describe("FilterRegion.vue", () => {
 
     // Assert
     expect(wrapper.exists()).to.be.true;
-    expect(wrapper.isVisible()).to.be.true;
 
     // Teardown
     wrapper.destroy();

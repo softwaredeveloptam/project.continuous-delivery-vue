@@ -13,7 +13,6 @@ describe("Map.vue", () => {
     // Assert
     expect(wrapper.get("GmapMap")).to.be.an("object");
     expect(wrapper.exists()).to.be.true;
-    expect(wrapper.isVisible()).to.be.true;
 
     // Teardown
     wrapper.destroy();
@@ -32,7 +31,6 @@ describe("Map.vue", () => {
   it.skip("can receive a click", () => {
     wrapper = mount(OurMap);
 
-    console.log("<--- $listeners --->\n", wrapper.vm.$listeners);
     wrapper.vm.$on("test", function(msg) {
       console.log(msg);
     });
