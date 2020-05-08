@@ -16,7 +16,7 @@ const seedLocationsDB = async () => {
       const state = location.Addresses[0].State;
       const city = location.Addresses[0].City;
       const highway = location.Site.Highway;
-      const type = location.FacilitySubtype.Namse;
+      const type = location.FacilitySubtype.Name;
       const highway_exit_num = location.Site.ExitNumber;
       const street_address = location.Addresses[0].Address1;
 
