@@ -4,6 +4,8 @@ const knex = require("knex");
 
 const locations = JSON.parse(fs.readFileSync("./data/locations.json"));
 
+console.log("locations.length", locations.lengthq);
+
 const seedLocationsDB = async () => {
   try {
     for (const location of locations) {
