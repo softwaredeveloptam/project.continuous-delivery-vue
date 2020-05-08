@@ -2,8 +2,8 @@
   <div id="app">
     <div>
       <Header msg="Welcome to FlyingK's High Flying Website" />
-      <Map />
-      <FilterRegion />
+      <Map v-bind:selectedValue="selectedValue" />
+      <FilterRegion v-on:submitSelectedValue="onSubmitSelectedValue" />
     </div>
   </div>
 </template>
@@ -19,6 +19,23 @@ export default {
     Header,
     Map,
     FilterRegion,
+  },
+  methods: {
+    onSubmitSelectedValue(value) {
+      this.selectedValue = JSON.parse(JSON.stringify(value));
+    },
+  },
+  data() {
+    return {
+      selectedValue: {
+        selectedTypes: [],
+        selectedHighway: "ALL",
+        selectedCity: "ALL",
+        selectedState: "ALL",
+        // selectedAmenities: [],
+        // selectedRestaurants: [],
+      },
+    };
   },
 };
 </script>
