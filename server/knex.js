@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const db_config = {
+  pool: { min: 0, max: 1 },
+
   directory: "../migrations",
   client: "pg",
   connection:

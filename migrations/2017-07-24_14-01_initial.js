@@ -17,6 +17,14 @@ exports.up = function(knex, Promise) {
     table.text("highway");
 
     table.text("type");
+
+    table.text("highway_exit_num");
+
+    table.text("street_address");
+
+    table.text("telephone");
+
+    table.text("fax");
   });
 };
 
