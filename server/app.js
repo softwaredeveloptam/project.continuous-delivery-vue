@@ -1,7 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const db = require("knex");
+const db = require("./knex");
+const knex = require("knex");
 
 const app = express();
 
@@ -17,7 +18,9 @@ app.use(express.static(path.resolve(__dirname, "..", "dist")));
 
 app.get("/api/locations", async (req, res) => {
   try {
-    const locations = await db.select().table("locations");
+    const locations = await knex(db)
+      .select()
+      .table("locations");
     res.json(locations);
   } catch (err) {
     console.error("Error loading locations!", err);

@@ -1,11 +1,14 @@
-const knex = require("knex");
+require("dotenv").config();
 
-const db = knex({
+const db_config = {
+  pool: { min: 0, max: 1 },
+
+  directory: "../migrations",
   client: "pg",
   connection:
     process.env.DATABASE_URL ||
-    `postgres://${process.env.USER}@127.0.0.1:5432/truckstop`,
+    `postgres://${process.env.USER}:${process.env.PASSWORD}@127.0.0.1:5432/truckstop`,
   searchPath: "public",
-});
+};
 
-module.exports = db;
+module.exports = db_config;

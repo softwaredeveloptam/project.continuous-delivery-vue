@@ -1,22 +1,41 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Melvin updated the app"/>
     <div>
-      <Map />
+      <Header msg="Welcome to FlyingK's High Flying Website" />
+      <Map v-bind:selectedValue="selectedValue" />
+      <FilterRegion v-on:submitSelectedValue="onSubmitSelectedValue" />
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Header from "./components/Header";
+import FilterRegion from "./components/FilterRegion";
 import Map from "./components/Map";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
+    Header,
     Map,
+    FilterRegion,
+  },
+  methods: {
+    onSubmitSelectedValue(value) {
+      this.selectedValue = JSON.parse(JSON.stringify(value));
+    },
+  },
+  data() {
+    return {
+      selectedValue: {
+        selectedTypes: [],
+        selectedHighway: "ALL",
+        selectedCity: "ALL",
+        selectedState: "ALL",
+        // selectedAmenities: [],
+        // selectedRestaurants: [],
+      },
+    };
   },
 };
 </script>

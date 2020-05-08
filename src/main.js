@@ -1,5 +1,5 @@
 import Vue from "vue";
-import * as VueGoogleMaps from "vue2-google-maps";
+import * as VueGoogleMaps from "vue2-google-maps"; //Added by Mako
 import App from "./App.vue";
 import store from "./store";
 
