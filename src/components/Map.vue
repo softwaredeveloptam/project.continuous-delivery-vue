@@ -50,3 +50,10 @@ export default {
   props: ["markers"],
 };
 </script>
+
+<style scoped>
+#hiddenButton {
+  position: relative;
+  left: 9999px;
+}
+</style>
