@@ -3,10 +3,6 @@
     <div>
       <Header msg="Welcome to FlyingK's High Flying Website" />
       <Map v-bind:markers="markers" />
-      <!-- <FilterRegion
-        v-on:submitSelectedValue="onSubmitSelectedValue"
-        v-on:updateDropdowns="onupdateDropdowns"
-      />-->
       <FilterRegion v-on:filter="updateMarkers" />
       <ResultsRegion v-bind:markers="this.markers" />
     </div>
