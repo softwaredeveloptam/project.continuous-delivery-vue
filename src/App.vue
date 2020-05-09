@@ -8,7 +8,7 @@
         v-on:updateDropdowns="onupdateDropdowns"
       /> -->
       <FilterRegion v-on:filter="updateMarkers" />
-      <!-- <ResultsRegion v-bind:markers="this.markers" /> -->
+      <ResultsRegion v-bind:markers="this.markers" />
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@
 import Header from "./components/Header";
 import FilterRegion from "./components/FilterRegion";
 import Map from "./components/Map";
-// import ResultsRegion from "./components/ResultsRegion";
+import ResultsRegion from "./components/ResultsRegion";
 
 export default {
   name: "app",
@@ -25,10 +25,13 @@ export default {
     Header,
     Map,
     FilterRegion,
+    ResultsRegion,
   },
   methods: {
     updateMarkers(markers) {
       this.markers = markers;
+      console.log(markers);
+      document.getElementById("hiddenButtion").click;
     },
   },
   data() {

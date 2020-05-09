@@ -21,7 +21,9 @@
           {{ highway }}
         </option>
       </select>
-      <button v-on:click="$emit('filter', result)">submit</button>
+      <button v-on:click="$emit('filter', result)" id="filterSubmitButton">
+        submit
+      </button>
       <button v-on:click="clearDropdown">reset</button>
     </div>
 
@@ -144,6 +146,7 @@ export default {
       this.state = undefined;
       this.city = undefined;
       this.highway = undefined;
+      document.getElementById("filterSubmitButton").click;
     },
   },
 };

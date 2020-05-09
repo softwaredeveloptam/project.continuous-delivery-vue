@@ -2,10 +2,21 @@
   <div>
     <h1>Please Find Your Options Below:</h1>
     <div v-for="el in markers" :key="el.id" class="LocationBox">
-      <!-- <div class="storeName">Store Name: {{ el.name }}</div>
-      <div class="details">Store Type: {{ el.type }}</div>
-      <div class="details">Store City:{{ el.city }}</div>
-      <div class="details">Highway: {{ el.highway }}</div> -->
+      <div class="storeName">Name: {{ el.name }}</div>
+      <div class="details">
+        Highway and Exit: exit {{ el.highway_exit_num }} of {{ el.highway }}
+      </div>
+      <div class="details">
+        Address: {{ el.street_address }}, {{ el.city }}, {{ el.state }}
+      </div>
+      <div class="details">
+        Contact Numbers: <br />
+        Telephone {{ el.telephone }} <br />
+        Fax: {{ el.fax }}
+      </div>
+      <div class="details">
+        Amenities, Gas Prices and Restaraunt Details: Coming Soon!
+      </div>
     </div>
     <!-- <h4>{{ markers }}</h4> -->
   </div>
