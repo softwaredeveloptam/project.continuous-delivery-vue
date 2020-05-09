@@ -6,7 +6,7 @@
       <!-- <FilterRegion
         v-on:submitSelectedValue="onSubmitSelectedValue"
         v-on:updateDropdowns="onupdateDropdowns"
-      /> -->
+      />-->
       <FilterRegion v-on:filter="updateMarkers" />
       <ResultsRegion v-bind:markers="this.markers" />
     </div>
@@ -30,8 +30,6 @@ export default {
   methods: {
     updateMarkers(markers) {
       this.markers = markers;
-      console.log(markers);
-      document.getElementById("hiddenButtion").click;
     },
   },
   data() {
