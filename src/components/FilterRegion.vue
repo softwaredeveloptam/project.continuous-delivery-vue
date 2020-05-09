@@ -21,36 +21,20 @@
           {{ highway }}
         </option>
       </select>
-      <button v-on:click="$emit('filter', result)" id="filterSubmitButton">
-        submit
-      </button>
-      <button v-on:click="clearDropdown">reset</button>
     </div>
-
-    <!-- <div>
-      Amenities
-      <label v-for="amenity in amenities" :key="amenity.key">
-        {{ amenity }}
-        <input
-          type="checkbox"
-          :value="amenity"
-          v-model="selectedValue.selectedAmenities"
-          @change="$emit('submitSelectedValue', selectedValue)"
-        />
+    <div>
+      Types
+      <label v-for="type in types" :key="type">
+        <input type="checkbox" :value="type" v-model="storetype" />
+        {{ type }}
       </label>
-    </div> -->
-    <!-- <div>
-      Restaurants
-      <label v-for="restaraunt in restaurants" :key="restaraunt.key">
-        {{ restaraunt }}
-        <input
-          type="checkbox"
-          :value="restaraunt"
-          v-model="selectedValue.selectedRestaurants"
-          @change="$emit('submitSelectedValue', selectedValue)"
-        />
-      </label>
-    </div> -->
+      <div>
+        <button v-on:click="$emit('filter', result)" id="filterSubmitButton">
+          submit
+        </button>
+        <button v-on:click="clearDropdown">reset</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +54,7 @@ export default {
       state: "",
       city: "",
       highway: "",
+      storetype: [],
     };
   },
   computed: {
@@ -119,26 +104,36 @@ export default {
         })
         .sort();
     },
+    types() {
+      return this.locations
+        .map((l) => l.type)
+        .reduce((accumulator, value) => {
+          if (!accumulator.includes(value)) {
+            accumulator.push(value);
+          }
+          return accumulator;
+        }, []);
+    },
     result() {
-      if (!this.state && !this.city && !this.highway) {
-        return this.locations;
-      }
+      let result = [...this.locations];
       if (this.state && this.city && this.highway) {
-        return this.locations.filter(
+        result = result.filter(
           (l) =>
             l.city === this.city &&
             l.state === this.state &&
             l.highway === this.highway
         );
+      } else if (this.state) {
+        result = result.filter((l) => l.state === this.state);
+      } else if (this.city) {
+        result = result.filter((l) => l.city === this.city);
+      } else if (this.highway) {
+        result = result.filter((l) => l.highway === this.highway);
       }
-      if (this.state) {
-        return this.locations.filter((l) => l.state === this.state);
+      if (this.storetype.length !== 0) {
+        result = result.filter((l) => this.storetype.includes(l.type));
       }
-      if (this.city) {
-        return this.locations.filter((l) => l.city === this.city);
-      } else {
-        return this.locations.filter((l) => l.highway === this.highway);
-      }
+      return result;
     },
   },
   methods: {
@@ -146,7 +141,8 @@ export default {
       this.state = undefined;
       this.city = undefined;
       this.highway = undefined;
-      document.getElementById("filterSubmitButton").click;
+      this.storetype = [];
+      this.$emit("filter", this.result);
     },
   },
 };
