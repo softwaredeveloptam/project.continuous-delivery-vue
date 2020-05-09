@@ -6,21 +6,21 @@
       <br />
       <select class="state" v-model="state">
         <option value disabled>State</option>
-        <option v-for="state in states" :key="state" :value="state">
-          {{ state }}
-        </option>
+        <option v-for="state in states" :key="state" :value="state">{{
+          state
+        }}</option>
       </select>
       <select class="city" v-model="city">
         <option value disabled>City</option>
-        <option v-for="city in cities" :key="city" :value="city">
-          {{ city }}
-        </option>
+        <option v-for="city in cities" :key="city" :value="city">{{
+          city
+        }}</option>
       </select>
       <select class="highway" v-model="highway">
         <option value disabled>Highway</option>
-        <option v-for="highway in highways" :key="highway" :value="highway">
-          {{ highway }}
-        </option>
+        <option v-for="highway in highways" :key="highway" :value="highway">{{
+          highway
+        }}</option>
       </select>
     </div>
     <div class="filter-box">
@@ -148,6 +148,10 @@ export default {
             l.city === this.city &&
             l.state === this.state &&
             l.highway === this.highway
+        );
+      } else if (this.state && this.city) {
+        result = result.filter(
+          (l) => l.city === this.city && l.state === this.state
         );
       } else if (this.state) {
         result = result.filter((l) => l.state === this.state);
